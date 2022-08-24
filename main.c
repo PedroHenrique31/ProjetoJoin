@@ -11,16 +11,16 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <locale.h>
-#define TAMANHO 1000
-#define LIMITE 6
+#define TAMANHO 1000 //defini o tamanho maximo da string pois em C puro strings são vetores
+#define LIMITE 6 // Limite para dividirmos em substrings depois
 
 int main()
 {
 
     char stringEntrada[TAMANHO],stringSAIDA[TAMANHO];
-    setlocale(LC_ALL,"Portuguese");
+    setlocale(LC_ALL,"Portuguese"); // Fução para fazer o windows ler caracteres unicode portugues
     printf("Digite uma palavra:\n");
-    scanf("%[^\n]s",stringEntrada);
+    scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
     for(int i=0;i<TAMANHO;i++){
         stringSAIDA[i]=toupper(stringEntrada[i]);
     }
