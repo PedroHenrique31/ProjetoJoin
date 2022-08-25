@@ -25,7 +25,7 @@ int main()
     do{
         stringSAIDA[i]=toupper(stringEntrada[i]);
         i++;
-    }while((i<TAMANHO)||(stringSAIDA[i]=='\n'));
+    }while((i<TAMANHO)&& (stringSAIDA[i]!='\n'));
     printf("A string digitada é :\n%s\n",stringSAIDA);
     return 0;
 }
