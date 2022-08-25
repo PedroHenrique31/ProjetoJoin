@@ -14,6 +14,7 @@
 #define TAMANHO 1000 //defini o tamanho maximo da string pois em C puro strings são vetores
 #define LIMITE 6 // Limite para dividirmos em substrings depois
 
+void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
 int main()
 {
 
@@ -22,10 +23,18 @@ int main()
     setlocale(LC_ALL,"Portuguese"); // Fução para fazer o windows ler caracteres unicode portugues
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
-    do{
-        stringSAIDA[i]=toupper(stringEntrada[i]);
-        i++;
-    }while((i<TAMANHO)&& (stringSAIDA[i]!='\n'));
+
+    maiusculo(stringEntrada,stringSAIDA);
     printf("A string digitada é :\n%s\n",stringSAIDA);
     return 0;
+}
+//converte cada letra da string para maiusculo até atingir o TAMANHO ou encontrar o caractere de quebra de linha '\n'
+void maiusculo(char stringIn[TAMANHO],char stringOut[TAMANHO]){
+    int i=0;
+     do{
+        stringOut[i]=toupper(stringIn[i]);
+        i++;
+    }while((i<TAMANHO)&& (stringOut[i]!='\n'));
+    printf("Função converte maiusculo: \n%s\n",stringOut);
+    return stringOut;
 }
