@@ -18,12 +18,14 @@ int main()
 {
 
     char stringEntrada[TAMANHO],stringSAIDA[TAMANHO];
+    int i=0;
     setlocale(LC_ALL,"Portuguese"); // Fução para fazer o windows ler caracteres unicode portugues
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
-    for(int i=0;i<TAMANHO;i++){
+    do{
         stringSAIDA[i]=toupper(stringEntrada[i]);
-    }
+        i++;
+    }while((i<TAMANHO)||(stringSAIDA[i]=='\n'));
     printf("A string digitada é :\n%s\n",stringSAIDA);
     return 0;
 }
