@@ -35,5 +35,4 @@ void maiusculo(char stringIn[TAMANHO],char stringOut[TAMANHO]){
         stringOut[i]=toupper(stringIn[i]);
         i++;
     }while((i<TAMANHO)&& (stringOut[i]!='\n'));
-    return stringOut;
 }
