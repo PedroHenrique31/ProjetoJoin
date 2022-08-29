@@ -16,7 +16,7 @@
 #define LIMITE 3 // Limite para dividirmos em substrings depois
 
 void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
-void* computa_thread(void* id_inicio_thread); // essa função fará as chamadas de cada thread.
+void* computa_thread(void* id_inicio_thread,char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
 int len(char *stringIN); // recebe uma string e retorna seu tamanho, para nós podermos dividir.
 
 int main()
@@ -35,7 +35,7 @@ int main()
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
 
-    maiusculo(stringEntrada,stringSAIDA);
+    computa_thread(threads_id,stringEntrada,stringSAIDA);
 
     //computa_thread(&threads_id[0]);
     printf("A string digitada é :\n%s \ne seu tamanho é:%d\n",stringSAIDA,len(stringEntrada));
@@ -51,10 +51,12 @@ void maiusculo(char stringIn[TAMANHO],char stringOut[TAMANHO]){
         i++;
     }while((i<TAMANHO)&& (stringOut[i]!='\n'));
 }
-void* computa_thread(void* id_inicio_thread){
-    int id=*((int*) id_inicio_thread);
+void* computa_thread(void* id_inicio_thread,char stringIN[TAMANHO],char stringOUT[TAMANHO]){
+    int id=*((int*) id_inicio_thread);printf("fez o cast pra int\n");
 
     printf("Numero de id da thread %d\n",id);
+
+    int tamanhoString=len(stringIN);printf("Linha 61, tamanho:%d",tamanhoString);
 }
 int len(char stringIN[TAMANHO]){
     int tam=0;
