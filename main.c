@@ -16,7 +16,7 @@
 #define LIMITE 3 // Limite para dividirmos em substrings depois
 
 void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
-void* computa_thread(void* id_inicio_thread,char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
+void* computa_thread(char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
 int len(char *stringIN); // recebe uma string e retorna seu tamanho, para nós podermos dividir.
 
 int main()
@@ -24,7 +24,7 @@ int main()
 
     char stringEntrada[TAMANHO],stringSAIDA[TAMANHO];
     int i=0;
-    pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
+    //pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
     setlocale(LC_ALL,"Portuguese"); // Fução para fazer o windows ler caracteres unicode portugues
     //incializa todas as posições com '\n' pra nao dar pau na hora de usar o len().
     for(int j=0;j<TAMANHO;j++){
@@ -35,7 +35,7 @@ int main()
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
 
-    computa_thread(&threads_id,stringEntrada,stringSAIDA);
+    computa_thread(stringEntrada,stringSAIDA);
 
     //computa_thread(&threads_id[0]);
     printf("A string digitada é :\n%s \ne seu tamanho é:%d\n",stringSAIDA,len(stringEntrada));
@@ -51,8 +51,9 @@ void maiusculo(char stringIn[TAMANHO],char stringOut[TAMANHO]){
         i++;
     }while((i<TAMANHO)&& (stringOut[i]!='\n'));
 }
-void* computa_thread(void* id_inicio_thread,char stringIN[TAMANHO],char stringOUT[TAMANHO]){
-    int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
+void* computa_thread(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
+    //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
+    pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
 
     //printf("Numero de id da thread %d\n",id);
 
@@ -61,6 +62,7 @@ void* computa_thread(void* id_inicio_thread,char stringIN[TAMANHO],char stringOU
         maiusculo(stringIN,stringOUT);
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
+        pthread_create(&threads_id[0],NULL,maiusculo,&stringIN,&stringOUT);
     }
 
 
