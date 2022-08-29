@@ -35,7 +35,7 @@ int main()
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
 
-    computa_thread(threads_id,stringEntrada,stringSAIDA);
+    computa_thread(&threads_id,stringEntrada,stringSAIDA);
 
     //computa_thread(&threads_id[0]);
     printf("A string digitada é :\n%s \ne seu tamanho é:%d\n",stringSAIDA,len(stringEntrada));
@@ -52,11 +52,19 @@ void maiusculo(char stringIn[TAMANHO],char stringOut[TAMANHO]){
     }while((i<TAMANHO)&& (stringOut[i]!='\n'));
 }
 void* computa_thread(void* id_inicio_thread,char stringIN[TAMANHO],char stringOUT[TAMANHO]){
-    int id=*((int*) id_inicio_thread);printf("fez o cast pra int\n");
+    int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
 
-    printf("Numero de id da thread %d\n",id);
+    //printf("Numero de id da thread %d\n",id);
 
-    int tamanhoString=len(stringIN);printf("Linha 61, tamanho:%d",tamanhoString);
+    int tamanhoString=len(stringIN);
+    if(tamanhoString<=LIMITE){
+        maiusculo(stringIN,stringOUT);
+    }else{
+        printf("String maior que limite, deve-se subdvidir e usar threads.\n");
+    }
+
+
+    //pthread_exit(NULL);
 }
 int len(char stringIN[TAMANHO]){
     int tam=0;
