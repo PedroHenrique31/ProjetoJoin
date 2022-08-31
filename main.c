@@ -12,18 +12,24 @@
 #include <pthread.h>
 #include <process.h>
 #include <locale.h>
-#include "OperaString.c"
+#include "OperaString.c" // arquivo comm funções para tratar as strings.
 
 
+// Essa struct será usada para passarmos ambas as strings por apenas um parâmetro.
+typedef struct Strings{
+    char *stringIN;
+    char *stringOUT;
+}Strings;
 
-void* computa_thread(char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
+void encapsulaMaiuscula(Strings *parametro);
+void* computa_tudo(char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
 
 
 int main()
 {
 
     char stringEntrada[TAMANHO],stringSAIDA[TAMANHO];
-    int i=0;
+
     //pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
     setlocale(LC_ALL,"Portuguese"); // Fução para fazer o windows ler caracteres unicode portugues
     //incializa todas as posições com '\n' pra nao dar pau na hora de usar o len().
@@ -35,7 +41,7 @@ int main()
     printf("Digite uma palavra:\n");
     scanf("%[^\n]s",stringEntrada); // lê uma linha inteira ignorando os espaços
 
-    computa_thread(stringEntrada,stringSAIDA);
+    computa_tudo(stringEntrada,stringSAIDA);
 
     //computa_thread(&threads_id[0]);
     printf("A string digitada é :\n%s \ne seu tamanho é:%d\n",stringSAIDA,len(stringEntrada));
@@ -44,9 +50,10 @@ int main()
     return 0;
 }
 
-void* computa_thread(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
+void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
     pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
+    Strings param;
 
     //printf("Numero de id da thread %d\n",id);
 
@@ -55,10 +62,21 @@ void* computa_thread(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
         maiusculo(stringIN,stringOUT);
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
+        param.stringIN=stringIN;
+        param.stringOUT=stringOUT;
+        encapsulaMaiuscula(&param);
         //pthread_create(&threads_id[0],NULL,maiusculo,&stringIN,&stringOUT);
     }
 
 
     //pthread_exit(NULL);
+}
+void encapsulaMaiuscula(Strings *parametro){
+    char *strIN=NULL,*strOUT=NULL;
+
+    strIN=parametro->stringIN;
+    strOUT=parametro->stringOUT;
+
+    maiusculo(strIN,strOUT);
 }
 
