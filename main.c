@@ -65,10 +65,11 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
 
-        int numOps=tamanhoString/LIMITE;printf("serão usadas: %d operações\n",numOps);
+        int numOps=tamanhoString/LIMITE,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
 
         for(int a=0;a<numOps;a++){
-            strncpy(parteDaString,stringIN,LIMITE);parteDaString[LIMITE+1]='\0';
+            deslocamento=a*LIMITE; // anda de 3 em caracteres.
+            strncpy(parteDaString,stringIN+deslocamento,LIMITE);parteDaString[LIMITE+1]='\0';
             printf("parte da string: %s\n",parteDaString);
         }
 
