@@ -12,6 +12,7 @@
 #include <pthread.h>
 #include <process.h>
 #include <locale.h>
+#include <string.h> // possui funções para manipulação de strings.
 #include "OperaString.c" // arquivo comm funções para tratar as strings.
 
 
@@ -62,11 +63,12 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
         maiusculo(stringIN,stringOUT);
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
+
         param.stringIN=stringIN;
         param.stringOUT=stringOUT;
 
-        encapsulaMaiuscula(&param);
-        //pthread_create(&threads_id[0],NULL,maiusculo,&stringIN,&stringOUT);
+        //encapsulaMaiuscula(&param);
+        pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
     }
 
 
@@ -79,5 +81,6 @@ void encapsulaMaiuscula(Strings *parametro){
     strOUT=parametro->stringOUT;
 
     maiusculo(strIN,strOUT);
+    //printf("encapsular maiusuclo gerou:\n %s \n",strOUT);// so pra ver
 }
 
