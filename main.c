@@ -64,6 +64,7 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
         param.stringIN=stringIN;
         param.stringOUT=stringOUT;
+
         encapsulaMaiuscula(&param);
         //pthread_create(&threads_id[0],NULL,maiusculo,&stringIN,&stringOUT);
     }
