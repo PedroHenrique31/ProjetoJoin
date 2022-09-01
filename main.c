@@ -90,6 +90,6 @@ void encapsulaMaiuscula(Strings *parametro){
     strOUT=parametro->stringOUT;
 
     maiusculo(strIN,strOUT);
-    //printf("encapsular maiusuclo gerou:\n %s \n",strOUT);// so pra ver
+    printf("encapsular maiusuclo gerou:\n%s \n",strOUT);// so pra ver
 }
 

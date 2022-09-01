@@ -9,7 +9,7 @@
 
 
 void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
-int len(char *stringIN); // recebe uma string e retorna seu tamanho, para nós podermos dividir.
+//int len(char *stringIN); // recebe uma string e retorna seu tamanho, para nós podermos dividir.
 
 int len(char stringIN[TAMANHO]){
     int tam=0;
