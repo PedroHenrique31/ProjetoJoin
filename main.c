@@ -55,6 +55,7 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
     pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
     Strings param;
+    char parteDaString[TAMANHO];
 
     //printf("Numero de id da thread %d\n",id);
 
@@ -63,6 +64,13 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
         maiusculo(stringIN,stringOUT);
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
+
+        int numOps=tamanhoString/LIMITE;printf("serão usadas: %d operações\n",numOps);
+
+        for(int a=0;a<numOps;a++){
+            strncpy(parteDaString,stringIN,LIMITE);parteDaString[LIMITE+1]='\0';
+            printf("parte da string: %s\n",parteDaString);
+        }
 
         param.stringIN=stringIN;
         param.stringOUT=stringOUT;
