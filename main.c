@@ -55,7 +55,7 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
     pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
     Strings param;
-    char parteDaString[TAMANHO];
+    char parteDaString[TAMANHO],parteDaStringMaiuscula[TAMANHO];
 
     //printf("Numero de id da thread %d\n",id);
 
@@ -67,17 +67,21 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
 
         int numOps=tamanhoString/LIMITE,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
 
+
         for(int a=0;a<numOps;a++){
             deslocamento=a*LIMITE; // anda de 3 em caracteres.
             strncpy(parteDaString,stringIN+deslocamento,LIMITE);parteDaString[LIMITE+1]='\0';
-            printf("parte da string: %s\n",parteDaString);
+            //printf("parte da string: %s\n",parteDaString);
+            param.stringIN=parteDaString;
+            param.stringOUT=parteDaStringMaiuscula;
+            pthread_create(&threads_id[a],NULL,encapsulaMaiuscula,&param);
+            //printf("parte da string: %s\n",parteDaString);
         }
 
-        param.stringIN=stringIN;
-        param.stringOUT=stringOUT;
+
 
         //encapsulaMaiuscula(&param);
-        pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
+        //pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
     }
 
 
