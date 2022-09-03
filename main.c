@@ -55,7 +55,7 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
     pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
     Strings param;
-    char parteDaString[TAMANHO],parteDaStringMaiuscula[TAMANHO];
+    char parteDaString[TAMANHO],conjuntoDeStrings[TAMANHO][TAMANHO];// Uma matriz gigantesca para acomodar as strings.
 
     //printf("Numero de id da thread %d\n",id);
 
@@ -67,18 +67,26 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
 
         int numOps=tamanhoString/LIMITE,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
 
-
+        /* Esse trecho realizará partição da string em numOps partes e atribuirá a cada uma uma thread
+         * Cada resultado de encaspulaMaiuscula sera escrito numa linha da matriz conjuntoDeStrings.
+         */
         for(int a=0;a<numOps;a++){
             deslocamento=a*LIMITE; // anda de 3 em caracteres.
             strncpy(parteDaString,stringIN+deslocamento,LIMITE);parteDaString[LIMITE+1]='\0';
-            //printf("parte da string: %s\n",parteDaString);
-            param.stringIN=parteDaString;
-            param.stringOUT=parteDaStringMaiuscula;
+            param.stringIN=parteDaString;printf("parteDaString: %s\n",parteDaString);
+            param.stringOUT=conjuntoDeStrings[a];
             pthread_create(&threads_id[a],NULL,encapsulaMaiuscula,&param);
-            //printf("parte da string: %s\n",parteDaString);
         }
-
-
+        // aqui será dado numOps comandos de join, para o programa esperar as numOps threads terminarem.
+        for(int i=0;i<numOps;i++){
+            pthread_join(threads_id[i],NULL);
+        }
+        printf("Agora veremos como esta o texto escrito na matriz\n");
+        int m=0;
+        for(int i=0;i<numOps;i++){
+            printf("%s\n",conjuntoDeStrings[i]);
+        }
+        //printf("numero de caracteres na matriz:%d\n",len(parteDaString));
 
         //encapsulaMaiuscula(&param);
         //pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
@@ -94,6 +102,6 @@ void encapsulaMaiuscula(Strings *parametro){
     strOUT=parametro->stringOUT;
 
     maiusculo(strIN,strOUT);
-    printf("encapsular maiusuclo gerou:\n%s \n",strOUT);// so pra ver
+    //printf("encapsular maiusuclo gerou:\n%s \n",strOUT);// so pra ver
 }
 

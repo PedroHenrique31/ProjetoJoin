@@ -5,7 +5,7 @@
 #include <process.h>
 #include <locale.h>
 #define TAMANHO 1000 //defini o tamanho maximo da string pois em C puro strings são vetores
-#define LIMITE 16 // Limite para dividirmos em substrings depois
+#define LIMITE 3 // Limite para dividirmos em substrings depois
 
 
 void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
