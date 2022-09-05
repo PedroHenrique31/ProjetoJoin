@@ -4,11 +4,11 @@
 #include <pthread.h>
 #include <process.h>
 #include <locale.h>
-#define TAMANHO 1000 //defini o tamanho maximo da string pois em C puro strings são vetores
-#define LIMITE 5 // Limite para dividirmos em substrings depois
+#include "OperaString.h"
+#include "ModuloThreads.h"
 
 
-void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
+//void maiusculo(char *stringIn,char *stringOut);// protótipo da função maiusculo.
 //int len(char *stringIN); // recebe uma string e retorna seu tamanho, para nós podermos dividir.
 
 int len(char stringIN[TAMANHO]){
