@@ -6,5 +6,5 @@ podem ser realizados por tarefas simultâneas, então juntaremos os pedaços com
 <br/>	Neste projeto usamos a biblioteca pthread.h,  com ela nós criamos uma função computa_tudo, que quebra a string em pedaços
 menores de tamanho até LIMITE (definido na biblioteca ModuloThreads.h), após isso nós criamos uma thread e passamos para ela
 o pedaço da string retirado. Cada thread escreve sua saída maiuscula numa linha da matriz de caracteres chamada 
-conjuntoDeStrings e posteriormente juntamos os pedaços novamente em stringOUT.
+conjuntoDeStrings e posteriormente juntamos os pedaços novamente em stringOUT.<br/>
 Projeto da disciplina de sistemas operacionais do CEUB, Brasília-DF.
