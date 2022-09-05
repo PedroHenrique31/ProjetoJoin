@@ -13,18 +13,8 @@
 #include <process.h>
 #include <locale.h>
 #include <string.h> // possui funções para manipulação de strings.
-#include "OperaString.c" // arquivo comm funções para tratar as strings.
-
-
-// Essa struct será usada para passarmos ambas as strings por apenas um parâmetro.
-typedef struct Strings{
-    char *stringIN;
-    char *stringOUT;
-}Strings;
-
-void encapsulaMaiuscula(Strings *parametro);
-void* computa_tudo(char* stringIN,char* stringOUT); // essa função fará as chamadas de cada thread.
-
+#include "OperaString.c" // arquivo comm as funções para maiuscular a string.
+#include "ModuloThreads.h"
 
 int main()
 {
@@ -50,50 +40,3 @@ int main()
     pthread_exit(NULL); //essa linha serve para fazer a função main esperar a execução da thread para encerrar.
     return 0;
 }
-
-void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
-    //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
-    pthread_t threads_id[TAMANHO]; // esse vetor armazena o numero de ID de cada thread, em teoria uma thread pra cada caractere
-    Strings param;
-    char parteDaString[TAMANHO],parteDaStringMaiuscula[TAMANHO];
-
-    //printf("Numero de id da thread %d\n",id);
-
-    int tamanhoString=len(stringIN);
-    if(tamanhoString<=LIMITE){
-        maiusculo(stringIN,stringOUT);
-    }else{
-        printf("String maior que limite, deve-se subdvidir e usar threads.\n");
-
-        int numOps=tamanhoString/LIMITE,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
-
-
-        for(int a=0;a<numOps;a++){
-            deslocamento=a*LIMITE; // anda de 3 em caracteres.
-            strncpy(parteDaString,stringIN+deslocamento,LIMITE);parteDaString[LIMITE+1]='\0';
-            //printf("parte da string: %s\n",parteDaString);
-            param.stringIN=parteDaString;
-            param.stringOUT=parteDaStringMaiuscula;
-            pthread_create(&threads_id[a],NULL,encapsulaMaiuscula,&param);
-            //printf("parte da string: %s\n",parteDaString);
-        }
-
-
-
-        //encapsulaMaiuscula(&param);
-        //pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
-    }
-
-
-    //pthread_exit(NULL);
-}
-void encapsulaMaiuscula(Strings *parametro){
-    char *strIN=NULL,*strOUT=NULL;
-
-    strIN=parametro->stringIN;
-    strOUT=parametro->stringOUT;
-
-    maiusculo(strIN,strOUT);
-    printf("encapsular maiusuclo gerou:\n%s \n",strOUT);// so pra ver
-}
-
