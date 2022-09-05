@@ -65,17 +65,20 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     }else{
         printf("String maior que limite, deve-se subdvidir e usar threads.\n");
 
-        int numOps=tamanhoString/LIMITE,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
+        int numOps=(tamanhoString/LIMITE)+1,deslocamento=0;printf("serão usadas: %d operações\n",numOps);
 
         /* Esse trecho realizará partição da string em numOps partes e atribuirá a cada uma uma thread
          * Cada resultado de encaspulaMaiuscula sera escrito numa linha da matriz conjuntoDeStrings.
          */
         for(int a=0;a<numOps;a++){
-            deslocamento=a*LIMITE; // anda de 3 em caracteres.
-            strncpy(parteDaString,stringIN+deslocamento,LIMITE);parteDaString[LIMITE+1]='\0';
-            param.stringIN=parteDaString;printf("parteDaString: %s\n",parteDaString);
-            param.stringOUT=conjuntoDeStrings[a];
+            deslocamento=a*LIMITE; // anda de 5 em caracteres.
+            strncpy(parteDaString,stringIN+deslocamento,LIMITE);// pega os primeiros LIMITE caracteres
+            parteDaString[LIMITE+1]='\0';//adiciona null ao final da para ela ser uma string
+            /*adiciona a string em param, pra passarmos para funcao encapsula maiuscula*/
+            param.stringIN=parteDaString;printf("parteDaString: %s ",parteDaString);
+            param.stringOUT=conjuntoDeStrings[a];// passa uma linha de conjuntoDeStrings para param
             pthread_create(&threads_id[a],NULL,encapsulaMaiuscula,&param);
+            printf("Criada na thread:%d\n",threads_id[a]);
         }
         // aqui será dado numOps comandos de join, para o programa esperar as numOps threads terminarem.
         for(int i=0;i<numOps;i++){
@@ -90,6 +93,18 @@ void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
 
         //encapsulaMaiuscula(&param);
         //pthread_create(&threads_id[0],NULL,encapsulaMaiuscula,&param);
+        //transcreve string para stringOUT
+        int posicaoString=0;
+        for(int i=0;i<numOps;i++){
+            for(int j=0;j<LIMITE;j++){
+                stringOUT[posicaoString]=conjuntoDeStrings[i][j];
+                posicaoString++;
+
+            }//FIM PERCORRE COLUNA DA MATRIZ
+            if(stringOUT[posicaoString]=='\n'){
+                break;
+            }
+        }//FIM PERCORRE stringOUT
     }
 
 
