@@ -7,7 +7,7 @@
 #include <string.h> // possui funções para manipulação de strings.
 #include "ModuloThreads.h"
 #define TAMANHO 1000 //defini o tamanho maximo da string pois em C puro strings são vetores
-#define LIMITE 3 // Limite para dividirmos em substrings depois
+#define LIMITE 16 // Limite para dividirmos em substrings depois
 
 void* computa_tudo(char stringIN[TAMANHO],char stringOUT[TAMANHO]){
     //int id=*((int*) id_inicio_thread);//printf("fez o cast pra int\n");
