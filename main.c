@@ -5,6 +5,7 @@
     Pedro Augusto Leite Prates 22008270
     Victor Furtado Estrada 22006647
     Ednei Bezerra da Costa 21160584
+    Eduardo Akio 22007658
 
 */
 
